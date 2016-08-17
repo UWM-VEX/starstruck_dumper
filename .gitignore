@@ -31,3 +31,11 @@
 # Debug files
 *.dSYM/
 *.su
+
+starstruck/.cproject
+starstruck/.project
+starstruck/.settings/org.eclipse.cdt.core.prefs
+starstruck/common.mk
+starstruck/firmware/*
+starstruck/Makefile
+starstruck/src/Makefile
