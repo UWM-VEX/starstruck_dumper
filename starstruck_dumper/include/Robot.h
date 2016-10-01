@@ -13,6 +13,6 @@
 #define WHEEL_DIAMETER 4.25
 
 Drive robotDrive;
-Shovel *robotShovel;
+Dumper * robotDumper;
 
 #endif /* INCLUDE_ROBOT_H_ */

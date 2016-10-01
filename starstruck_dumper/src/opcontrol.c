@@ -39,9 +39,8 @@ void operatorControl()
 
 	while (true)
 	{
-		holonomicDrive(robotDrive, OIGetDriveMagnitude(), OIGetDriveDirection(),
-				OIGetDriveRotation());
-		runShovel(robotShovel, OIGetFire());
+		tankDrive(robotDrive, OIGetDriveLeft(), OIGetDriveRight());
+		runDumper(robotDumper, OIGetDumper());
 		delay(25);
 	}
 }

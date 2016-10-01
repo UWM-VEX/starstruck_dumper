@@ -29,7 +29,8 @@ struct Drive{
 
 Drive initDrive(PantherMotor frontLeftMotor, PantherMotor frontRightMotor,
 		PantherMotor rearLeftMotor, PantherMotor rearRightMotor,
-		Encoder leftEncoder, Encoder rightEncoder, Gyro gyro);
+		Encoder frontLeftEncoder, Encoder frontRightEncoder,
+		Encoder rearLeftEncoder, Encoder rearRightEncoder, Gyro gyro);
 void tankDrive(Drive drive, int magnitude, int rotation);
 void arcadeDrive(Drive drive, int magnitude, int rotation);
 
