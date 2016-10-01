@@ -584,8 +584,6 @@ void autonomousPeriodic()
 		default:
 			isAuto = 0;
 			break;
-
-
 	}
 
 	autonomousInfo.lastStep = autonomousInfo.step;
