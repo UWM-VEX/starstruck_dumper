@@ -9,7 +9,7 @@
 
 Dumper * initDumper(PantherMotor topLeft, PantherMotor frontLeft, PantherMotor backLeft,
 		PantherMotor bottomLeft, PantherMotor topRight, PantherMotor frontRight,
-		PantherMotor backRight, PantherMotor bottomRight)
+		PantherMotor backRight, PantherMotor bottomRight, Pot * pot)
 {
 	Dumper * newDumper = malloc(sizeof(Dumper));
 	newDumper->topLeft = topLeft;
@@ -20,6 +20,7 @@ Dumper * initDumper(PantherMotor topLeft, PantherMotor frontLeft, PantherMotor b
 	newDumper->frontRight = frontRight;
 	newDumper->backRight = backRight;
 	newDumper->bottomRight = bottomRight;
+	newDumper->pot = pot;
 
 	return newDumper;
 }
