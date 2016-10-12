@@ -17,7 +17,17 @@ int OIGetDriveRight()
 	return joystickGetAnalog(1, 2);
 }
 
+int OIGetDriveY()
+{
+	return joystickGetAnalog(1, 3);
+}
+
+int OIGetDriveX()
+{
+	return joystickGetAnalog(1, 4);
+}
+
 int OIGetDumper()
 {
-	return joystickGetAnalog(2, 3);
+	return joystickGetAnalog(1, 2);
 }
