@@ -11,5 +11,7 @@
 int OIGetDriveLeft();
 int OIGetDriveRight();
 int OIGetDumper();
+int OIGetDriveY();
+int OIGetDriveX();
 
 #endif /* INCLUDE_OI_H_ */
