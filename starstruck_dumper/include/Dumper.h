@@ -17,12 +17,12 @@ struct Dumper {
 	PantherMotor frontRight;
 	PantherMotor backRight;
 	PantherMotor bottomRight;
-	Pot pot;
+	Pot * pot;
 }typedef Dumper;
 
 Dumper * initDumper(PantherMotor topLeft, PantherMotor frontLeft, PantherMotor backLeft,
 		PantherMotor bottomLeft, PantherMotor topRight, PantherMotor frontRight,
-		PantherMotor backRight, PantherMotor bottomRight, Pot pot);
+		PantherMotor backRight, PantherMotor bottomRight, Pot * pot);
 void runDumper(Dumper * dumper, int speed);
 
 #endif /* INCLUDE_DUMPER_H_ */

@@ -5,9 +5,11 @@
  *      Author: Erik
  */
 
+#include "main.h"
+
 Pot * initPot(int port, int top, int bottom)
 {
-	Pot * newPot = malloc(Pot);
+	Pot *newPot = malloc(sizeof(Pot));
 	newPot->port = port;
 	newPot->top = top;
 	newPot->bottom = bottom;
