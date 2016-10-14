@@ -49,3 +49,11 @@ int inDeadBandDouble(double realNum, double desiredNum, double deadBand)
 {
 	return (absDouble(realNum - desiredNum) < deadBand);
 }
+
+int enforceDeadband(int input, int desiredNumber, int deadband)
+{
+	if(abs(input - desiredNumber) <= deadband)
+		return 0;
+	else
+		return input;
+}
