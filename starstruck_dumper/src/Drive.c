@@ -4,11 +4,11 @@
  * Initializes a new drive object composed of six PantherMotors, two encoders and a gyro.
  */
 Drive initDrive(PantherMotor leftMotor, PantherMotor rightMotor,
-		Encoder leftEncoder, Encoder rightEncoder, Gyro gyro)
+		Encoder leftEncoder, Encoder rightEncoder, Gyro gyro, int gyroInverted)
 {
 	Drive newDrive = {leftMotor, rightMotor,
 			leftEncoder, rightEncoder,
-			gyro};
+			gyro, gyroInverted};
 
 	return newDrive;
 }
@@ -32,4 +32,16 @@ void arcadeDrive(Drive drive, int magnitude, int rotation)
 
 	setPantherMotor(drive.leftMotor, left);
 	setPantherMotor(drive.rightMotor, right);
+}
+
+int driveGyroRead(Drive drive)
+{
+	if(drive.gyroInverted)
+	{
+		return - gyroGet(drive.gyro);
+	}
+	else
+	{
+		return gyroGet(drive.gyro);
+	}
 }

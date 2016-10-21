@@ -12,50 +12,43 @@
 
 #define GYRO_INVERTED 1
 
-struct DriveToWPIterationInfo{
-
-	int magnitude;
-	int rotation;
-	double distanceError;
-	int angleError;
-	int leftEncoder;
-	int rightEncoder;
-
-}typedef DriveToWPIterationInfo;
-
-struct DriveToWP{
+struct DriveToWPProperties {
 
 	Drive drive;
-	double magnitudeKP;
-	double turningKP;
-	double straightRotationKP;
+	double magnitudeDB;
+	double magnitudeBreakingDistance;
+	long magnitudeRampUpTime;
+	int magnitudeMaxSpeed;
+	int magnitudeMinSpeed;
+	int rotationDB;
+	int rotationBreakingDistance;
+	int rotationMaxSpeed;
+	int rotationMinSpeed;
+	double wheelDiameter;
+	int encoderLines;
+	int gyroInverted;
+	unsigned long holdTime;
+
+}typedef DriveToWPProperties;
+
+struct DriveToWP {
+
+	DriveToWPProperties *properties;
 	double distance;
 	int rotation;
-	int straightMaxSpeed;
-	int turningMaxSpeed;
-	int straightMinSpeed;
-	int turningMinSpeed;
-	double initialDistance;
-	int initialAngle;
 	int isFinished;
-	double slowDownDistance;
-	long timeToAccelerate;
-	int slowDownAngle;
-	long timeToAccelerateTurning;
-	int goodRotation;
-	int goodDistance;
-	long timeAtGoodRotation;
-	long timeAtGoodDistance;
-	DriveToWPIterationInfo *iteration;
+	int reachedDistance;
+	int reachedRotation;
+	unsigned long timeAchievedGoodLocation;
 
-}typedef DriveToWP;
+} typedef DriveToWP;
 
-DriveToWP initDriveToWP(Drive drive, double distance, int rotation);
-void driveToWPSetMagnitudeKP(DriveToWP *step, double kP);
-void driveToWPSetRotationKP(DriveToWP *step, double kP);
-void driveToWPSetMaxSpeed(DriveToWP *step, int speed);
-void driveToWPSetMinSpeed(DriveToWP *step, int speed);
-void driveToWP(DriveToWP *step);
-
+DriveToWPProperties * initDriveToWPProperties(Drive drive, double magnitudeDB,
+		double magnitudeBreakingDistance, long magnitudeRampUpTime, int magnitudeMaxSpeed,
+		int magnitudeMinSpeed, int rotationDB, int rotationBreakingDistance,
+		int rotationMaxSpeed, int rotationMinSpeed, double wheelDiameter,
+		int encoderLines, int gyroInverted, unsigned long holdTime);
+DriveToWP * initDriveToWP(DriveToWPProperties * properties, double distance, int rotation);
+void driveToWP(DriveToWP * step);
 
 #endif /* PROPDRIVETOWAYPOINT_H_ */
