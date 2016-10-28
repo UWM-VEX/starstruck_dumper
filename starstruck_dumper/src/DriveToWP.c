@@ -11,7 +11,7 @@ DriveToWPProperties * initDriveToWPProperties(Drive drive, double magnitudeDB,
 		double magnitudeBreakingDistance, long magnitudeRampUpTime, int magnitudeMaxSpeed,
 		int magnitudeMinSpeed, int rotationDB, int rotationBreakingDistance,
 		int rotationMaxSpeed, int rotationMinSpeed, double wheelDiameter,
-		int encoderLines, int gyroInverted, unsigned long holdTime)
+		int gyroInverted, unsigned long holdTime)
 {
 	DriveToWPProperties * newDriveToWPProperties = malloc(sizeof(DriveToWPProperties));
 
@@ -26,7 +26,6 @@ DriveToWPProperties * initDriveToWPProperties(Drive drive, double magnitudeDB,
 	newDriveToWPProperties->rotationMaxSpeed = rotationMaxSpeed;
 	newDriveToWPProperties->rotationMinSpeed = rotationMinSpeed;
 	newDriveToWPProperties->wheelDiameter = wheelDiameter;
-	newDriveToWPProperties->encoderLines = encoderLines;
 	newDriveToWPProperties->gyroInverted = gyroInverted;
 	newDriveToWPProperties->holdTime = holdTime;
 
@@ -42,14 +41,25 @@ DriveToWP * initDriveToWP(DriveToWPProperties * properties, double distance, int
 	newDriveToWP->reachedDistance = 0;
 	newDriveToWP->reachedRotation = 0;
 	newDriveToWP->timeAchievedGoodLocation = 0;
+	newDriveToWP->isFirstTime = 1;
 	return newDriveToWP;
 }
 
 void driveToWP(DriveToWP * step)
 {
-	double averageEncoder = ((double)(encoderGet(step->properties->drive.leftEncoder)
-			- encoderGet(step->properties->drive.rightEncoder)) / 2);
-	double distancePV = averageEncoder * encoderToInches(step->properties->encoderLines,
+	if(step->isFirstTime)
+	{
+		step->firstLeftEncoder = encoderGet(step->properties->drive.leftEncoder);
+		step->firstRightEncoder = encoderGet(step->properties->drive.rightEncoder);
+		step->firstGyro = gyroGet(step->properties->drive.gyro);
+		step->isFirstTime = 0;
+	}
+
+	double averageEncoder = ((double)((encoderGet(step->properties->drive.leftEncoder)
+			- step->firstLeftEncoder)
+			+ (encoderGet(step->properties->drive.rightEncoder)
+					- step->firstRightEncoder)) / 2);
+	double distancePV = encoderToInches(averageEncoder,
 			step->properties->wheelDiameter);
 	int rotationPV = gyroGet(step->properties->drive.gyro);
 
@@ -83,10 +93,12 @@ void driveToWP(DriveToWP * step)
 	{
 		if(inDistanceDB)
 		{
+			//lcdSetText(uart1, 1, "Mag: DB");
 			magnitude = 0;
 		}
 		else if(absDouble(distanceError) < step->properties->magnitudeBreakingDistance)
 		{
+			//lcdSetText(uart1, 1, "Mag: Break");
 			// slow down
 			// magnitude = (Vmax - Vmin)(SP - PV)/Breaking Distance + Vmin
 			magnitude = (int) ((step->properties->magnitudeMaxSpeed -
@@ -96,6 +108,7 @@ void driveToWP(DriveToWP * step)
 		}
 		else if(autonomousInfo.elapsedTime < step->properties->magnitudeRampUpTime)
 		{
+			//lcdSetText(uart1, 1, "Mag: Accel");
 			// speed up
 			// magnitude = (Vmax - Vmin)*t/ramp up time + Vmin
 			magnitude = (int) ((step->properties->magnitudeMaxSpeed -
@@ -105,22 +118,26 @@ void driveToWP(DriveToWP * step)
 		}
 		else
 		{
+			//lcdSetText(uart1, 1, "Mag: Coast");
 			// coast
 			magnitude = step->properties->magnitudeMaxSpeed;
 		}
 
 		if(inRotationDB)
 		{
+			//lcdSetText(uart1, 2, "Rot: DB");
 			// no rotation
 			rotation = 0;
 		}
 		else if(abs(rotationError) < step->properties->rotationBreakingDistance)
 		{
+			//lcdSetText(uart1, 2, "Rot: Slow");
 			// turn slowly
 			rotation = step->properties->rotationMinSpeed;
 		}
 		else
 		{
+			//lcdSetText(uart1, 2, "Rot: Fast");
 			// turn quickly
 			rotation = step->properties->rotationMaxSpeed;
 		}
@@ -135,10 +152,12 @@ void driveToWP(DriveToWP * step)
 		// Check that we're at a good distance, if we're not, slowly move to a good distance
 		if(absDouble(distanceError) < step->properties->magnitudeDB)
 		{
+			//lcdSetText(uart1, 1, "Mag: Good");
 			goodDistance = 1;
 		}
 		else
 		{
+			//lcdSetText(uart1, 1, "Mag: Adj");
 			magnitude = step->properties->magnitudeMinSpeed;
 		}
 
@@ -147,10 +166,12 @@ void driveToWP(DriveToWP * step)
 		// Check that we're at a good rotation, if we're not, slowly move to a good rotation
 		if(abs(rotationError) < step->properties->rotationDB)
 		{
+			//lcdSetText(uart1, 2, "Rot: Good");
 			goodRotation = 1;
 		}
 		else
 		{
+			//lcdSetText(uart1, 2, "Rot: Adj");
 			rotation = step->properties->rotationMinSpeed;
 		}
 
@@ -193,6 +214,9 @@ void driveToWP(DriveToWP * step)
 	{
 		rotation *= -1;
 	}
+
+	lcdPrint(uart1, 1, "%f", distancePV);
+	lcdPrint(uart1, 2, "%f", distanceError);
 
 	arcadeDrive(step->properties->drive, magnitude, rotation);
 }

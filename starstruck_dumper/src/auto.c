@@ -93,8 +93,20 @@ int globalTimeout;
 /**
  * Runs at the start of autonomous. Steps should be initialized here.
  */
+DriveToWPProperties *defaultProps;
+DriveToWP *drive24;
+DriveToWP *turn90Left;
+DriveToWP *turn90Right;
+DriveToWP *drive24Back;
+
 void autonomousInit()
 {
+	defaultProps = initDriveToWPProperties(robotDrive, 0.5, 18, 500, 100, 20, 1, 40,
+			70, 40, 4.25, 0, 500);
+	drive24 = initDriveToWP(defaultProps, 24, 0);
+	turn90Left = initDriveToWP(defaultProps, 0, -90);
+	turn90Right = initDriveToWP(defaultProps, 0, 90);
+	drive24Back = initDriveToWP(defaultProps, -24, 0);
 	/**
 	 * Here, the different steps are instantiated and details are
 	 * given about them. By hovering over the function name, you can see a
@@ -122,10 +134,32 @@ void autonomousPeriodic()
 
 	autonomousInfo.elapsedTime = millis() - stepStartTime;
 
-	lcdPrint(uart1, 1, "Step: %d", autonomousInfo.step);
+	//lcdPrint(uart1, 1, "Step: %d", autonomousInfo.step);
 
 	switch(autonomousSelection)
 	{
+	case(MODE_1):
+		switch(autonomousInfo.step)
+		{
+		case(1):
+			driveToWP(drive24);
+			autonomousInfo.isFinished = drive24->isFinished;
+			break;
+		case(2):
+			driveToWP(turn90Left);
+			autonomousInfo.isFinished = turn90Left->isFinished;
+			break;
+		case(3):
+			driveToWP(turn90Right);
+			autonomousInfo.isFinished = turn90Right->isFinished;
+			break;
+		case(4):
+			driveToWP(drive24Back);
+			autonomousInfo.isFinished = drive24Back->isFinished;
+			break;
+		}
+		break;
+
 		case(DO_NOTHING):
 			isAuto = 0;
 		break;

@@ -32,6 +32,7 @@ int alliance;
 #define BLUE 1
 
 #define DO_NOTHING 0
+#define MODE_1 1
 
 int autonomousSelection;
 

@@ -3,10 +3,11 @@
 /**
  * Initializes a new drive object composed of six PantherMotors, two encoders and a gyro.
  */
-Drive initDrive(PantherMotor leftMotor, PantherMotor rightMotor,
+Drive initDrive(PantherMotor frontLeftMotor, PantherMotor rearLeftMotor,
+		PantherMotor frontRightMotor, PantherMotor rearRightMotor,
 		Encoder leftEncoder, Encoder rightEncoder, Gyro gyro, int gyroInverted)
 {
-	Drive newDrive = {leftMotor, rightMotor,
+	Drive newDrive = {frontLeftMotor, rearLeftMotor, frontRightMotor, rearRightMotor,
 			leftEncoder, rightEncoder,
 			gyro, gyroInverted};
 
@@ -18,8 +19,10 @@ void tankDrive(Drive drive, int left, int right)
 	left = limit(left, 127, -127);
 	right = limit(right, 127, -127);
 
-	setPantherMotor(drive.leftMotor, left);
-	setPantherMotor(drive.rightMotor, right);
+	setPantherMotor(drive.frontLeftMotor, left);
+	setPantherMotor(drive.rearLeftMotor, left);
+	setPantherMotor(drive.frontRightMotor, right);
+	setPantherMotor(drive.rearRightMotor, right);
 }
 
 void arcadeDrive(Drive drive, int magnitude, int rotation)
@@ -30,8 +33,7 @@ void arcadeDrive(Drive drive, int magnitude, int rotation)
 	left = limit(left, 127, -127);
 	right = limit(right, 127, -127);
 
-	setPantherMotor(drive.leftMotor, left);
-	setPantherMotor(drive.rightMotor, right);
+	tankDrive(drive, left, right);
 }
 
 int driveGyroRead(Drive drive)
