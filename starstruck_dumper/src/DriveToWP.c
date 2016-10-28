@@ -61,7 +61,7 @@ void driveToWP(DriveToWP * step)
 					- step->firstRightEncoder)) / 2);
 	double distancePV = encoderToInches(averageEncoder,
 			step->properties->wheelDiameter);
-	int rotationPV = gyroGet(step->properties->drive.gyro);
+	int rotationPV = gyroGet(step->properties->drive.gyro) - step->firstGyro;
 
 	if(step->properties->gyroInverted)
 	{
@@ -177,7 +177,7 @@ void driveToWP(DriveToWP * step)
 
 		if(goodDistance && goodRotation)
 		{
-			if(step->timeAchievedGoodLocation != 0)
+			if(step->timeAchievedGoodLocation == 0)
 			{
 				step->timeAchievedGoodLocation = millis();
 			}
