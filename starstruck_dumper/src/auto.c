@@ -102,7 +102,7 @@ DriveToWP *drive24Back;
 void autonomousInit()
 {
 	defaultProps = initDriveToWPProperties(robotDrive, 0.5, 18, 500, 100, 20, 2, 40,
-			70, 20, 4.25, 0, 5000);
+			70, 30, 4.25, 0, 500);
 	drive24 = initDriveToWP(defaultProps, 24, 0);
 	turn90Left = initDriveToWP(defaultProps, 0, -90);
 	turn90Right = initDriveToWP(defaultProps, 0, 90);
