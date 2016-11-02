@@ -94,19 +94,23 @@ int globalTimeout;
  * Runs at the start of autonomous. Steps should be initialized here.
  */
 DriveToWPProperties *defaultProps;
+// START OF DECLARATIONS
 DriveToWP *drive24;
 DriveToWP *turn90Left;
 DriveToWP *turn90Right;
 DriveToWP *drive24Back;
+// END OF DECLARATIONS
 
 void autonomousInit()
 {
 	defaultProps = initDriveToWPProperties(robotDrive, 0.5, 18, 500, 100, 20, 2, 40,
 			70, 30, 4.25, 0, 500);
+	// START OF INSTANTIATIONS
 	drive24 = initDriveToWP(defaultProps, 24, 0);
 	turn90Left = initDriveToWP(defaultProps, 0, -90);
 	turn90Right = initDriveToWP(defaultProps, 0, 90);
 	drive24Back = initDriveToWP(defaultProps, -24, 0);
+	// END OF INSTANTIATIONS
 	/**
 	 * Here, the different steps are instantiated and details are
 	 * given about them. By hovering over the function name, you can see a
@@ -138,6 +142,7 @@ void autonomousPeriodic()
 
 	switch(autonomousSelection)
 	{
+	// START OF EXECUTIONS
 	case(MODE_1):
 		switch(autonomousInfo.step)
 		{
@@ -159,14 +164,14 @@ void autonomousPeriodic()
 			break;
 		}
 		break;
-
-		case(DO_NOTHING):
-			isAuto = 0;
+	// END OF EXECUTIONS
+	case(DO_NOTHING):
+		isAuto = 0;
 		break;
 
-		default:
-			isAuto = 0;
-			break;
+	default:
+		isAuto = 0;
+		break;
 	}
 
 	autonomousInfo.lastStep = autonomousInfo.step;
