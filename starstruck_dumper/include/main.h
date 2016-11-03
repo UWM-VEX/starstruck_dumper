@@ -55,6 +55,7 @@
 #include "Auto.h"
 #include "DriveToWP.h"
 #include "AutoDumper.h"
+#include "Timeout.h"
 
 
 // Allow usage of this file in C++ programs
