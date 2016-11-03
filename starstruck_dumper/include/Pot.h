@@ -21,7 +21,7 @@ Pot * initPot(int port, int top, int bottom);
  * Returns a scaled value between 0 and 1 for the potentiometer's positions
  * in a defined range.
  */
-double getScaledValue(Pot * pot);
-int getRawValue(Pot * pot);
+double potGetScaledValue(Pot * pot);
+int potGetRawValue(Pot * pot);
 
 #endif /* INCLUDE_POT_H_ */

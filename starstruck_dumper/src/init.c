@@ -173,7 +173,7 @@ void initialize() {
 	robotDumper = initDumper(initPantherMotor(10, 0), initPantherMotor(8, 0),
 			initPantherMotor(7, 0), initPantherMotor(6, 0), initPantherMotor(5, 0),
 			initPantherMotor(4, 0), initPantherMotor(3, 0), initPantherMotor(1, 0),
-			initPot(1, 4096, 0));
+			initPot(1, 4096, 0), 1, 0, 0, 0, .4, 1);
 
 	//lcdModeSelect();
 

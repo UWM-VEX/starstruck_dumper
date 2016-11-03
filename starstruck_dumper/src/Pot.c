@@ -20,13 +20,13 @@ Pot * initPot(int port, int top, int bottom)
  * Returns a scaled value between 0 and 1 for the potentiometer's positions
  * in a defined range.
  */
-double getScaledValue(Pot * pot)
+double potGetScaledValue(Pot * pot)
 {
 	return ((double) (analogRead(pot->port) - pot->bottom))/
 			((double) (pot->top - pot->bottom));
 }
 
-int getRawValue(Pot * pot)
+int potGetRawValue(Pot * pot)
 {
 	return analogRead(pot->port);
 }

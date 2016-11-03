@@ -31,3 +31,23 @@ int OIGetDumper()
 {
 	return joystickGetAnalog(1, 2);
 }
+
+int OIGetDumperLow()
+{
+	return joystickGetDigital(2, 8, JOY_DOWN);
+}
+
+int OIGetDumperTravel()
+{
+	return joystickGetDigital(2, 8, JOY_RIGHT);
+}
+
+int OIGetDumperHigh()
+{
+	return joystickGetDigital(2, 8, JOY_UP);
+}
+
+int OIGetDumperDump()
+{
+	return joystickGetDigital(2, 5, JOY_UP) && joystickGetDigital(2, 6, JOY_UP);
+}

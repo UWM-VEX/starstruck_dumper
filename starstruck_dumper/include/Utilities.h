@@ -18,5 +18,6 @@ double encoderToInches(int encoderLines, double wheelDiameter);
 double absDouble(double num);
 int inDeadBand(int realNum, int desiredNum, int deadBand);
 int inDeadBandDouble(double realNum, double desiredNum, double deadBand);
+int enforceDeadband(int input, int desiredNumber, int deadband);
 
 #endif /* UTILITIES_H_ */

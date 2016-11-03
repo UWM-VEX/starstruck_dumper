@@ -13,5 +13,10 @@ int OIGetDriveRight();
 int OIGetDumper();
 int OIGetDriveY();
 int OIGetDriveX();
+int OIGetDumper();
+int OIGetDumperLow();
+int OIGetDumperTravel();
+int OIGetDumperHigh();
+int OIGetDumperDump();
 
 #endif /* INCLUDE_OI_H_ */
