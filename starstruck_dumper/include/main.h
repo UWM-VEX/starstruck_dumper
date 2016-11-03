@@ -54,6 +54,7 @@
 #include "Robot.h"
 #include "Auto.h"
 #include "DriveToWP.h"
+#include "AutoDumper.h"
 
 
 // Allow usage of this file in C++ programs
