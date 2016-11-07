@@ -39,7 +39,7 @@ void operatorControl()
 
 	while (true)
 	{
-		arcadeDrive(robotDrive, OIGetDriveY(), OIGetDriveX());
+		tankDrive(robotDrive, OIGetDriveLeft(), OIGetDriveRight());
 		dumperTeleop(robotDumper);
 
 		delay(25);

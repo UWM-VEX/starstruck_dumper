@@ -62,7 +62,6 @@ void updateDumperPID(Dumper * dumper)
 	PIDRunController(dumper->pidController, pv);
 
 	lcdPrint(uart1, 1, "PV: %f", pv);
-	lcdPrint(uart1, 2, "Raw: %d", potGetRawValue(dumper->pot));
 }
 
 double getDumperHeight(Dumper * dumper)
@@ -85,7 +84,7 @@ void dumperDump(Dumper * dumper)
 	double pv = potGetScaledValue(dumper->pot);
 	if(dumper->dumpState == DUMPER_RAISING)
 	{
-		if(inDeadBandDouble(pv, dumper->highHeight, 3))
+		if(inDeadBandDouble(pv, dumper->highHeight, .02))
 		{
 			dumper->dumpState = DUMPER_FALLING;
 		}
@@ -97,26 +96,28 @@ void dumperDump(Dumper * dumper)
 
 	if(dumper->dumpState == DUMPER_FALLING)
 	{
-		if(inDeadBandDouble(pv, dumper->lowHeight, 3))
+		if(inDeadBandDouble(pv, dumper->lowHeight, .02))
 		{
 			dumper->height = DUMPER_LOW;
+			dumper->dumpState = DUMPER_RAISING;
 		}
 		else
 		{
 			dumperToHeight(dumper, dumper->lowHeight);
-			dumper->dumpState = DUMPER_RAISING;
 		}
 	}
 }
 
 void dumperTeleop(Dumper * dumper)
 {
-	if(abs(OIGetDumper() > 10))
+	if(abs(OIGetDumper()) > 20)
 	{
 		dumper->mode = DUMPER_MANUAL;
+		lcdSetText(uart1, 2, "Manual");
 	}
 	else
 	{
+		lcdSetText(uart1, 2, "Auto");
 		if(OIGetDumperLow())
 		{
 			dumper->mode = DUMPER_AUTO;

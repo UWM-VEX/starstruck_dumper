@@ -6,7 +6,7 @@
  */
 #include "main.h"
 
-PIDController* initPIDController(double kP, double kI, double kD, double kF, int setPoint, int errorEpsilon)
+PIDController* initPIDController(double kP, double kI, double kD, double kF, double setPoint, double errorEpsilon)
 {
 	PIDController  *newController = malloc(sizeof(PIDController));
 
@@ -55,16 +55,16 @@ void PIDsetErrorEpsilon(PIDController *controller, double errorEpsilon)
 	(*controller).errorEpsilon = errorEpsilon;
 }
 
-int PIDgetPContribution(PIDController *controller, int processVariable)
+int PIDgetPContribution(PIDController *controller, double processVariable)
 {
 	return (int) ((*controller).kP * ((*controller).setPoint - processVariable));
 }
 
-int PIDgetIContribution(PIDController *controller, int processVariable)
+int PIDgetIContribution(PIDController *controller, double processVariable)
 {
-	int error = (*controller).setPoint - processVariable;
+	double error = (*controller).setPoint - processVariable;
 
-	if(abs(error) < (*controller).errorEpsilon)
+	if(absDouble(error) < (*controller).errorEpsilon)
 	{
 		(*controller).sumOfError = 0;
 		//puts("Error cleared.");
@@ -74,7 +74,7 @@ int PIDgetIContribution(PIDController *controller, int processVariable)
 	{
 		//puts("Error accumulated.");
 		long timeDiff = millis() - (*controller).lastTime;
-		int newError = (int) timeDiff * error;
+		double newError = timeDiff * error;
 		(*controller).sumOfError += newError;
 		//printf("Sum of Error: %d\n", (*controller).sumOfError);
 		long numToReturn = (long) (*controller).sumOfError * (*controller).kI;
@@ -83,16 +83,16 @@ int PIDgetIContribution(PIDController *controller, int processVariable)
 	}
 }
 
-int PIDgetDContribution(PIDController *controller, int processVariable)
+int PIDgetDContribution(PIDController *controller, double processVariable)
 {
 	int output;
-	int error = (*controller).setPoint - processVariable;
-	if(error != controller->lastError) {
+	double error = (*controller).setPoint - processVariable;
+	if(absDouble(error - controller->lastError) > 0.005) {
 		controller->lastDTime = millis();
 		if(millis() - controller->lastDTime < 250) {
 			int timeDiff = (int) (millis() - (*controller).lastTime);
-			int errorDiff = error - (*controller).lastError;
-			double slope = ((double) errorDiff) / ((double) timeDiff);
+			double errorDiff = error - (*controller).lastError;
+			double slope = errorDiff / ((double) timeDiff);
 			controller->lastD = (int) (slope * (*controller).kD);
 			output = controller->lastD;
 			//lcdPrint(uart1, 1, "%f", slope);
@@ -118,7 +118,7 @@ int PIDgetFContribution(PIDController *controller)
 	return (int) ((*controller).kF * (*controller).setPoint);
 }
 
-int PIDRunController(PIDController *controller, int processVariable)
+int PIDRunController(PIDController *controller, double processVariable)
 {
 	int pContribution = PIDgetPContribution(controller, processVariable);
 	int iContribution = PIDgetIContribution(controller, processVariable);
