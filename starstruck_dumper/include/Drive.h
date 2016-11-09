@@ -15,10 +15,8 @@
  */
 struct Drive{
 
-	PantherMotor frontLeftMotor;
-	PantherMotor rearLeftMotor;
-	PantherMotor frontRightMotor;
-	PantherMotor rearRightMotor;
+	PantherMotor leftMotor;
+	PantherMotor rightMotor;
 	Encoder leftEncoder;
 	Encoder rightEncoder;
 	Gyro gyro;
@@ -26,8 +24,7 @@ struct Drive{
 
 }typedef Drive;
 
-Drive initDrive(PantherMotor frontLeftMotor, PantherMotor rearLeftMotor,
-		PantherMotor frontRightMotor, PantherMotor rearRightMotor,
+Drive initDrive(PantherMotor leftMotor, PantherMotor rightMotor,
 		Encoder leftEncoder, Encoder rightEncoder, Gyro gyro, int gyroInverted);
 void tankDrive(Drive drive, int magnitude, int rotation);
 void arcadeDrive(Drive drive, int magnitude, int rotation);
