@@ -71,3 +71,15 @@ int OIGetDumperHang()
 	return joystickGetDigital(2, 8, JOY_RIGHT) ||
 			joystickGetDigital(1, 8, JOY_RIGHT);
 }
+
+int OIGetAntiTipIn()
+{
+	return joystickGetDigital(1, 8, JOY_DOWN) ||
+			joystickGetDigital(2, 8, JOY_DOWN);
+}
+
+int OIGetAntiTipOut()
+{
+	return joystickGetDigital(1, 8, JOY_UP) ||
+			joystickGetDigital(2, 8, JOY_UP);
+}

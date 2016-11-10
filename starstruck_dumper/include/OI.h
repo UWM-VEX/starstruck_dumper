@@ -19,5 +19,7 @@ int OIGetDumperTravel();
 int OIGetDumperHigh();
 int OIGetDumperDump();
 int OIGetDumperHang();
+int OIGetAntiTipIn();
+int OIGetAntiTipOut();
 
 #endif /* INCLUDE_OI_H_ */

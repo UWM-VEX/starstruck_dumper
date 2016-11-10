@@ -14,5 +14,6 @@
 
 Drive robotDrive;
 Dumper * robotDumper;
+AntiTippers * robotAntiTippers;
 
 #endif /* INCLUDE_ROBOT_H_ */

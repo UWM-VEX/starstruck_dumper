@@ -50,6 +50,7 @@
 #include "PIDController.h"
 #include "Pot.h"
 #include "Drive.h"
+#include "AntiTippers.h"
 #include "Dumper.h"
 #include "Robot.h"
 #include "Auto.h"
