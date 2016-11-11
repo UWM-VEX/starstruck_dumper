@@ -95,10 +95,10 @@ int globalTimeout;
  */
 DriveToWPProperties *defaultProps;
 // START OF DECLARATIONS
-DriveToWP *drive24;
-DriveToWP *turn90Left;
-DriveToWP *turn90Right;
-DriveToWP *drive24Back;
+
+AutoLiftLock * command1;
+AutoTippers * command2;
+
 // END OF DECLARATIONS
 
 void autonomousInit()
@@ -106,10 +106,14 @@ void autonomousInit()
 	defaultProps = initDriveToWPProperties(robotDrive, 0.5, 18, 500, 100, 20, 2, 40,
 			70, 30, 4.25, 0, 500);
 	// START OF INSTANTIATIONS
-	drive24 = initDriveToWP(defaultProps, 24, 0);
-	turn90Left = initDriveToWP(defaultProps, 0, -90);
-	turn90Right = initDriveToWP(defaultProps, 0, 90);
-	drive24Back = initDriveToWP(defaultProps, -24, 0);
+if(autonomousSelection == DO_NOTHING)
+{
+}
+if(autonomousSelection == MODE_1)
+{
+	command1 = initAutoLiftLock(robotLiftLock,IN);
+	command2 = initAutoTippers(robotAntiTippers,OUT);
+}
 	// END OF INSTANTIATIONS
 	/**
 	 * Here, the different steps are instantiated and details are
@@ -143,31 +147,37 @@ void autonomousPeriodic()
 	switch(autonomousSelection)
 	{
 	// START OF EXECUTIONS
-	case(MODE_1):
+		case(DO_NOTHING):
 		switch(autonomousInfo.step)
 		{
-		case(1):
-			driveToWP(drive24);
-			autonomousInfo.isFinished = drive24->isFinished;
-			break;
-		case(2):
-			driveToWP(turn90Left);
-			autonomousInfo.isFinished = turn90Left->isFinished;
-			break;
-		case(3):
-			driveToWP(turn90Right);
-			autonomousInfo.isFinished = turn90Right->isFinished;
-			break;
-		case(4):
-			driveToWP(drive24Back);
-			autonomousInfo.isFinished = drive24Back->isFinished;
-			break;
+
+
+			default:
+				isAuto = 0;
+				break;
+		}
+		break;
+		case(MODE_1):
+		switch(autonomousInfo.step)
+		{
+			case(1):
+				autoLiftLock(command1);
+
+				autonomousInfo.isFinished = (*command1).isFinished;
+				break;
+			case(2):
+				autoTippers(command2);
+
+				autonomousInfo.isFinished = (*command2).isFinished;
+				break;
+
+
+			default:
+				isAuto = 0;
+				break;
 		}
 		break;
 	// END OF EXECUTIONS
-	case(DO_NOTHING):
-		isAuto = 0;
-		break;
 
 	default:
 		isAuto = 0;
