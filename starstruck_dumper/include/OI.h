@@ -21,5 +21,7 @@ int OIGetDumperDump();
 int OIGetDumperHang();
 int OIGetAntiTipIn();
 int OIGetAntiTipOut();
+int OIGetLiftLockIn();
+int OIGetLiftLockOut();
 
 #endif /* INCLUDE_OI_H_ */

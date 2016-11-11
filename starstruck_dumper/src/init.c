@@ -155,6 +155,7 @@ void lcdModeSelect()
   */
 void initializeIO() {
 	robotAntiTippers = initAntiTippers(12);
+	robotLiftLock = initLiftLock(11);
 	lcdInit(uart1);
 }
 

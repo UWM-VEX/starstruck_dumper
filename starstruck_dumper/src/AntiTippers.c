@@ -7,8 +7,8 @@
 
 #include "main.h"
 
-#define ANTI_TIPPERS_IN HIGH
-#define ANTI_TIPPERS_OUT LOW
+#define ANTI_TIPPERS_IN LOW
+#define ANTI_TIPPERS_OUT HIGH
 
 AntiTippers * initAntiTippers(int port)
 {

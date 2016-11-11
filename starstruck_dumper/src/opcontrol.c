@@ -51,6 +51,15 @@ void operatorControl()
 			antiTippersOut(robotAntiTippers);
 		}
 
+		if(OIGetLiftLockIn())
+		{
+			liftLockIn(robotLiftLock);
+		}
+		else if(OIGetLiftLockOut())
+		{
+			liftLockOut(robotLiftLock);
+		}
+
 		delay(25);
 	}
 }

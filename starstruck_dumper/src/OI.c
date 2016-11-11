@@ -83,3 +83,15 @@ int OIGetAntiTipOut()
 	return joystickGetDigital(1, 8, JOY_UP) ||
 			joystickGetDigital(2, 8, JOY_UP);
 }
+
+int OIGetLiftLockIn()
+{
+	return joystickGetDigital(1, 8, JOY_LEFT) ||
+			joystickGetDigital(2, 8, JOY_LEFT);
+}
+
+int OIGetLiftLockOut()
+{
+	return joystickGetDigital(1, 7, JOY_RIGHT) ||
+			joystickGetDigital(2, 7, JOY_RIGHT);
+}
