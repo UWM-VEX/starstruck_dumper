@@ -57,6 +57,8 @@
 #include "Auto.h"
 #include "DriveToWP.h"
 #include "AutoDumper.h"
+#include "AutoTippers.h"
+#include "AutoLiftLock.h"
 #include "Timeout.h"
 
 

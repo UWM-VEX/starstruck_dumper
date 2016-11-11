@@ -11,6 +11,8 @@
 #include "main.h"
 
 #define WHEEL_DIAMETER 4.25
+#define IN 0
+#define OUT 1
 
 Drive robotDrive;
 Dumper * robotDumper;
